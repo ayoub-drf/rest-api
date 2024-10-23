@@ -15,6 +15,8 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
     RetrieveUpdateDestroyAPIView, 
 )
+from rest_framework.filters import SearchFilter, OrderingFilter
+
 
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -60,15 +62,20 @@ class ProductRetrieveDestroyAPIView(RetrieveDestroyAPIView):
 class ProductListAPIView(ListAPIView):
     queryset = Product.objects.all().order_by('name')
     serializer_class = ProductSerializer
-    pagination_class = CustomPagination
+    # pagination_class = CustomPagination
     # filter_backends = (DjangoFilterBackend,)
     # filterset_class  = ProductFilter
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = ['name', 'price']
+    search_fields = ['name']
+    ordering_fields = ['name']
+    ordering = ['name']
 
-    def filter_queryset(self, queryset):
-        name = self.request.query_params.get('name', None)
-        if name:
-            return queryset.filter(name__icontains=name)
-        return queryset
+    # def filter_queryset(self, queryset):
+    #     name = self.request.query_params.get('name', None)
+    #     if name:
+    #         return queryset.filter(name__icontains=name)
+    #     return queryset
 
     # def get_queryset(self):
     #     return Product.objects.filter(name__icontains='product')
@@ -91,34 +98,37 @@ class ProductRetrieveAPIView(RetrieveAPIView):
     lookup_url_kwarg = 'pk'
     # multiple_lookup_fields = ['pk', 'color']
     # multiple_lookup_url_kwarg = ['id', 'color_name']
-    
 
     def get_object(self):
         pk = self.kwargs['pk']
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, pk=pk)
-
-        print(self.check_object_permissions(self.request, obj))
+        # print(self.check_object_permissions(self.request, obj))
 
         return obj
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        print('instance', instance)
+        serializer = self.get_serializer(instance)
+
+        return Response(serializer.data)
 
 
 class ProductCreateAPIView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    def create(self, request, *args, **kwargs):
+        request.data['price'] = float(request.data['price']) - 10
+        return super().create(request, *args, **kwargs)
+    
     def perform_create(self, serializer):
         instance = serializer.save()
-        user = User.objects.get(username='maria')
-
-        send_email_confirmation(user=user, modified=instance)
-        
-        instance.user = user
         if not instance.content:
-            instance.content = user.email
+            instance.content = 'No Content For this product'
 
         instance.save()
-
         return instance
 
 
@@ -131,13 +141,19 @@ class ProductUpdateAPIView(UpdateAPIView):
     def get_queryset(self):
         return Product.objects.all()
     
+    def update(self, request, *args, **kwargs):
+        user = User.objects.get(username='maria')
+        request.data['user'] = user.pk
+        return super().update(request, *args, **kwargs)
+    
     def perform_update(self, serializer):
         instance = serializer.save()
 
         instance.name = "You can't update because I want that"
+        user = User.objects.get(username='maria')
 
-        if not instance.content:
-            instance.content = self.request.user.email
+        if instance.content:
+            instance.content = instance.user.email
 
         instance.save()
 

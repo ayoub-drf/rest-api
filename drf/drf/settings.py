@@ -106,8 +106,12 @@ WSGI_APPLICATION = 'drf.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'neondb',
+        'HOST': 'ep-misty-lab-a8vxjv4b.eastus2.azure.neon.tech',
+        'PORT': 5432,
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'USER': env('DATABASE_USER'),
     }
 }
 

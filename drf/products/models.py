@@ -7,6 +7,7 @@ class Product(models.Model):
     content = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='images', default='default_img.png')
+    published = models.DateTimeField(auto_now_add=True)
     
     class Meta:
         verbose_name = "Product"

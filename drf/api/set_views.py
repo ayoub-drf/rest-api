@@ -1,11 +1,15 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAdminUser
 
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
 from products.models import Product
 from products.serializers import ProductSerializer
+from users.serializers import UserSerializer
 
 
 # Start ViewSet
@@ -53,5 +57,23 @@ class ProductListRetrieveViewSet(viewsets.ViewSet):
 # product_create = ProductListRetrieveViewSet.as_view({'post': 'create'})
 # product_delete = ProductListRetrieveViewSet.as_view({'delete': 'delete'})
 # End ViewSet
+
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    basename = 'user'
+    description = "This viewset provides CRUD operations for user."
+    permission_classes = None
+
+
+    @action(detail=True, methods=['get'], url_path=r'products')
+    def get_user_products(self, request, pk=None):
+        user = self.get_object()
+        products = user.product_set.all()
+        serializer = ProductSerializer(products, many=True)
+
+        return Response(serializer.data)
 
 

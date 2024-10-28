@@ -38,6 +38,31 @@ from .pagination import CustomPagination
 from .mails import send_email_confirmation
 from .mixins import MultipleLookUPFiledMixin
 
+from .parsers import (
+    CustomKeyValueParser, CustomJsonParser
+)
+
+from rest_framework.parsers import (
+    FormParser,
+    JSONParser,
+)
+
+class ParserView(APIView):
+    # text/plain key: value
+    # parser_classes = [CustomKeyValueParser]
+
+    # application/x-www-form-urlencoded
+    # parser_classes = [FormParser]
+
+    # application/json
+    # parser_classes = [JSONParser, CustomJsonParser] 
+
+
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        return Response(data, status=status.HTTP_200_OK)
+
 
 
 class ProductMixinRetrieveAPIView(MultipleLookUPFiledMixin ,RetrieveAPIView):

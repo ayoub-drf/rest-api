@@ -1,7 +1,6 @@
 from django.urls import path
 from . import cb_views as views
 from . import views as regular_views
-from . import set_views
 
 
 
@@ -9,6 +8,9 @@ from . import set_views
 
 
 urlpatterns = [
+    path('parser-view/', views.ParserView.as_view(), name='parser-view'),
+
+
     # Start Index
 
     # path('', regular_views.index, name='products'),
@@ -63,6 +65,5 @@ urlpatterns = [
     # path('products/mixins/retrieve/<str:name>/', views.ProductMixinRetrieveAPIView.as_view()),
     
     # Start Mixins Views
-
 
 ]

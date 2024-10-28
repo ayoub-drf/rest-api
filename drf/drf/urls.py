@@ -6,5 +6,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('api.urls')),
-    path('api/', include('drf.routers'))
+    path('api/', include(('drf.routers', 'my_routers')))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# from .routers import router
+# urlpatterns += router.urls

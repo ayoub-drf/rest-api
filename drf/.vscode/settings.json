@@ -3,5 +3,6 @@
         "filterset",
         "viewsets",
         "viewset",
-    ]
+    ],
+    "python.REPL.enableREPLSmartSend": false
 }

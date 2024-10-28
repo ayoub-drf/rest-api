@@ -1,7 +1,20 @@
-from api.set_views import ProductListRetrieveViewSet, UserViewSet
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import DefaultRouter, SimpleRouter
 
-router = DefaultRouter()
+from api.viewsets import UserViewSet
+
+
+
+# router = DefaultRouter(trailing_slash=False) # http://127.0.0.1:8000/api/users
+# router = DefaultRouter(trailing_slash=True) # http://127.0.0.1:8000/api/users/ 
 # router.register(prefix='products', viewset=ProductListRetrieveViewSet, basename='product')
-router.register(prefix=r'users', viewset=UserViewSet, basename='product')
+# router.register(prefix=r'users', viewset=UserViewSetGenericViewSet, basename='user')
+# router.register(prefix=r'users', viewset=UserViewSet, basename='user')
+# router.register('products', ProductListRetrieveViewSet, basename='product')
+# router.register(prefix=r'users', viewset=UserList, basename='user')
+
+
+from api.custom_routers import CustomReadOnlyRouter
+
+router = CustomReadOnlyRouter(trailing_slash=True)
+router.register('users', UserViewSet)
 urlpatterns = router.urls

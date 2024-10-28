@@ -55,6 +55,9 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     # 'PAGE_SIZE': 1
     # 'DEFAULT_THROTTLE_CLASSES': [
@@ -104,14 +107,21 @@ WSGI_APPLICATION = 'drf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'neondb',
+#         'HOST': 'ep-misty-lab-a8vxjv4b.eastus2.azure.neon.tech',
+#         'PORT': 5432,
+#         'PASSWORD': env('DATABASE_PASSWORD'),
+#         'USER': env('DATABASE_USER'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
-        'HOST': 'ep-misty-lab-a8vxjv4b.eastus2.azure.neon.tech',
-        'PORT': 5432,
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'USER': env('DATABASE_USER'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

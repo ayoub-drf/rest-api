@@ -1,0 +1,14 @@
+<!-- templates/product_form.html -->
+<form method="post" action="{% url 'product-create' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="name">Name:</label>
+    <input type="text" name="name" required>
+
+    <label for="price">Price:</label>
+    <input type="number" step="0.01" name="price" required>
+
+    <label for="image">Image:</label>
+    <input type="file" name="image" accept="image/*" required>
+
+    <button type="submit">Create Product</button>
+</form>

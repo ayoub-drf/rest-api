@@ -1,0 +1,4 @@
+djangorestframework-yaml
+djangorestframework-xml
+HTMLFormRenderer
+MultiPartRenderer

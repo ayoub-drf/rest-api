@@ -2,14 +2,33 @@ from django.urls import path
 from . import cb_views as views
 from . import views as regular_views
 
+from .renders import (
+    TemplateHTMLRendererAPIView,
+    json_render_view,
+    static_html_renderer_view,
+    plain_text_view,
+    json_view,
+    binary_view
+)
+
 
 
 
 
 
 urlpatterns = [
-    path('parser-view/', views.ParserView.as_view(), name='parser-view'),
+    # path('parser-view/', views.ParserView.as_view(), name='parser-view'),
+    # path('upload/<str:filename>', views.ParserView.as_view(), name='parser-view'),
 
+    # path('', json_render_view),
+    # path('', static_html_renderer_view),
+
+    path('', binary_view),
+    # path('', plain_text_view),
+    # path('', json_view),
+
+
+    # path('<str:product_id>/', TemplateHTMLRendererAPIView.as_view(), name='single-product'),
 
     # Start Index
 

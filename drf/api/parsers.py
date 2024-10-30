@@ -1,6 +1,7 @@
 from rest_framework.parsers import BaseParser
 from rest_framework.exceptions import ParseError
 import json
+import cgi
 
 
 class CustomKeyValueParser(BaseParser):
@@ -31,3 +32,5 @@ class CustomJsonParser(BaseParser):
             return data
         except Exception as e:
             raise ParseError("Could not parse data: {}".format(e))
+
+

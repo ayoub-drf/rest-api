@@ -45,7 +45,11 @@ from .parsers import (
 from rest_framework.parsers import (
     FormParser,
     JSONParser,
+    MultiPartParser,
+    FileUploadParser,
 )
+
+import os
 
 class ParserView(APIView):
     # text/plain key: value
@@ -57,11 +61,39 @@ class ParserView(APIView):
     # application/json
     # parser_classes = [JSONParser, CustomJsonParser] 
 
+    # application/form-data
+    # parser_classes = [MultiPartParser]
 
+    # application/form-data
+    parser_classes = [FileUploadParser]
 
-    def post(self, request, *args, **kwargs):
-        data = request.data
-        return Response(data, status=status.HTTP_200_OK)
+    def put(self, request, filename, *args, **kwargs):
+        file = request.data['file']
+        folder_path = "C:/Users/x/dev/rest-api/drf/media/upload"
+
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+
+        save_path = os.path.join("C:/Users/x/dev/rest-api/drf/media/upload/", file.name)
+
+        if os.path.exists(save_path):
+            return Response({'error': 'File already exists.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        with open(save_path, 'wb') as f:
+            for chunk in file.chunks():
+                f.write(chunk)
+
+        return Response({'file_name': file.name, 'file_size': file.size, "message": f'Uploaded successfully in {save_path}'})
+
+    # def post(self, request, *args, **kwargs):
+    #     data = request.data
+    #     img = request.data['image']
+
+        # with open(save_path, 'wb') as image:
+        #     for chunk in img.chunks():
+        #         image.write(chunk)
+
+        # return Response({"message": "Success"})
 
 
 

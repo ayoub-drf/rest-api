@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # External Apps
     'rest_framework',
     'django_filters',
+    'rest_framework_yaml',
 
     # Internal Apps
     'api',

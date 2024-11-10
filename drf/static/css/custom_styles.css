@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: red !important;
+}
+
+.custom-container {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+input[type="password"], input[type="text"], textarea {
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.choice-field {
+    margin: 5px;
+}

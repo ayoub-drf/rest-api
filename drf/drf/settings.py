@@ -48,17 +48,22 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'rest_framework_yaml',
+    'corsheaders',
 
     # Internal Apps
     'api',
     'products',
     'users',
+    'books',
+    'core',
+    'base',
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ]
+    # 'URL_FIELD_NAME': 'link', # for HyperlinkedModelSerializer also u can do it inside the Serializer 
+    # 'DEFAULT_PARSER_CLASSES': [
+    #     'rest_framework.parsers.JSONParser',
+    # ]
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     # 'PAGE_SIZE': 1
     # 'DEFAULT_THROTTLE_CLASSES': [
@@ -75,6 +80,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -170,6 +176,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

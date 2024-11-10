@@ -2,3 +2,19 @@ djangorestframework-yaml
 djangorestframework-xml
 HTMLFormRenderer
 MultiPartRenderer
+djangorestframework-jsonp
+drf-excel
+djangorestframework-gis
+django-rest-framework-gis
+drf-writable-nested
+build_standard_field - ModelSerializer
+build_relational_field - ModelSerializer
+build_nested_field - ModelSerializer
+build_property_field - ModelSerializer
+build_url_field - ModelSerializer
+build_unknown_field - ModelSerializer
+ListSerializer - many_init
+read_only
+Beware of possible n+1 problems when using source attribute if you are accessing a relational orm model
+HStoreField
+

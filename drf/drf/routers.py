@@ -1,6 +1,6 @@
-from rest_framework.routers import DefaultRouter, SimpleRouter
+# from rest_framework.routers import DefaultRouter, SimpleRouter
 
-from api.viewsets import UserViewSet
+# from api.viewsets import UserViewSet
 
 
 
@@ -18,8 +18,15 @@ from api.viewsets import UserViewSet
 # router = CustomReadOnlyRouter(trailing_slash=True)
 # router.register('users', UserViewSet)
 
-from api.renders import AdminRendererAPIView
-router = DefaultRouter()
-router.register(prefix='^products', viewset=AdminRendererAPIView, basename='product')
+# from core.views import LibraryAPIView
 
-urlpatterns = router.urls
+# from api.renders import AdminRendererAPIView
+# router = DefaultRouter()
+# router.register(prefix='^products', viewset=AdminRendererAPIView, basename='product')
+
+# from rest_framework.routers import DefaultRouter
+
+# router = DefaultRouter()
+# router.register(prefix=r'child', viewset=ChildModelViewSet, basename='child')
+
+# urlpatterns = router.urls

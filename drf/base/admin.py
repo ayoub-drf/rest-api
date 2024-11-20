@@ -6,5 +6,5 @@ from .models import (
     Product
 )
 
-admin.site.register(Father)
-admin.site.register(Product)
+# admin.site.register(Father)
+# admin.site.register(Product)

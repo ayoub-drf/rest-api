@@ -17,4 +17,7 @@ ListSerializer - many_init
 read_only
 Beware of possible n+1 problems when using source attribute if you are accessing a relational orm model
 HStoreField
-
+display_value
+Reverse relations
+django-guardian
+RemoteUserAuthentication

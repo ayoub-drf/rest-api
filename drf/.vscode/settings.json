@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
         "filterset",
-        "viewsets",
+        "pymysql",
         "viewset",
+        "viewsets",
+        "mydb",
     ],
     "python.REPL.enableREPLSmartSend": false
 }

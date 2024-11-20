@@ -15,7 +15,7 @@ urlpatterns = [
 
     # path('c/', include(('drf.routers', 'my_routers'))),
 
-    path('api/', include('base.urls')),
+    path('', include('new_cache.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

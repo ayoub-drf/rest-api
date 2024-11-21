@@ -50,6 +50,35 @@ def checkCache():
 
 
 
+from django.core.cache import cache
+
+pages = {
+    "about": "<h1>About Page</h1>",
+    "contact": "<h1>Contact Page</h1>",
+}
+
+# cache.set(key="msg", value="Hello world", timeout=100) # Set to the cache
+
+# msg_cache = cache.get("msg", default=None) # Retrieve from the cache
+
+# cache.delete("msg") # Delete from the cache (True or False)
+
+# Add this if msg key does not exists already in cache
+# add_or_not = cache.add(key="msg", value="Hello world", timeout=100)
+# print(add_or_not) # False  (already in cache)
+
+# cache.clear()
+
+# cache.set_many(data=pages, timeout=100, version=1)
+
+# def t():
 
 
+cache.set(key="ip_127.11.11", value=1)
 
+key = f"ip_127.11.11"
+request_count = cache.get(key=key, default=0)
+
+if request_count < 10:
+    cache.set(key="ip_127.11.11", value=request_count + 1)
+    print(request_count)

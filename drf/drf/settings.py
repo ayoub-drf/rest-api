@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'auth_simple_jwt',
     'new_permissions',
     'new_cache',
+    'new_throttling',
 ]
 
 REST_FRAMEWORK = {
@@ -80,14 +81,20 @@ REST_FRAMEWORK = {
     # ]
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     # 'PAGE_SIZE': 1
-    # 'DEFAULT_THROTTLE_CLASSES': [
-    #     'rest_framework.throttling.AnonRateThrottle',
-    #     'rest_framework.throttling.UserRateThrottle',
-    # ],
-    # 'DEFAULT_THROTTLE_RATES': {
-    #     'anon': '1/day',
-    #     'user': '4/day',
-    # }
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.ScopedRateThrottle',
+        'new_throttling.throttling.BurstRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'x': '2/day',
+        'special_scope_one': '3/day',
+        'special_scope_two': '10/minute',
+        'default': '2/day',
+        'anon': '7/day',
+        'user': '10/day',
+    }
     # 'DEFAULT_FILTER_BACKENDS': (
     #     'django_filters.rest_framework.DjangoFilterBackend',
     # ),

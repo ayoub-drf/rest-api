@@ -15,7 +15,7 @@ urlpatterns = [
 
     # path('c/', include(('drf.routers', 'my_routers'))),
 
-    path('', include('new_throttling.urls')),
+    path('', include('new_pagination.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

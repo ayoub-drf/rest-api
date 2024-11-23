@@ -1,10 +1,11 @@
 {
     "cSpell.words": [
+        "Browsable",
         "filterset",
+        "mydb",
         "pymysql",
         "viewset",
-        "viewsets",
-        "mydb",
+        "viewsets"
     ],
     "python.REPL.enableREPLSmartSend": false
 }

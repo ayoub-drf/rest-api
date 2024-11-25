@@ -22,9 +22,7 @@ def getNotes():
         r = requests.get(f"{url}{notes}", headers=headers)
         if r.status_code == 200:
             print(r.json())
-        
-        if r.status_code == 401:
-            print('The access token expired')
+
 
 
         if r.status_code == 401:
@@ -71,14 +69,26 @@ pages = {
 
 # cache.set_many(data=pages, timeout=100, version=1)
 
-# def t():
 
 
-cache.set(key="ip_127.11.11", value=1)
+# cache.set(key="ip_127.11.11", value=1)
 
-key = f"ip_127.11.11"
-request_count = cache.get(key=key, default=0)
+# key = f"ip_127.11.11"
+# request_count = cache.get(key=key, default=0)
 
-if request_count < 10:
-    cache.set(key="ip_127.11.11", value=request_count + 1)
-    print(request_count)
+# if request_count < 10:
+#     cache.set(key="ip_127.11.11", value=request_count + 1)
+#     print(request_count)
+
+
+# queryset = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
+
+# page_size = 2
+# page_number = 4
+
+# start_index = queryset[(page_size * page_number) - page_size:(page_size * page_number)]
+
+
+
+

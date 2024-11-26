@@ -74,7 +74,12 @@ INSTALLED_APPS = [
     'new_throttling',
     'new_filtering',
     'new_pagination',
+    'new_versioning',
+    'new_metadata',
+    "new_schemas",
 ]
+
+
 
 REST_FRAMEWORK = {
     # 'URL_FIELD_NAME': 'link', # for HyperlinkedModelSerializer also u can do it inside the Serializer 
@@ -163,6 +168,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'drf.urls'
+
+
 
 TEMPLATES = [
     {

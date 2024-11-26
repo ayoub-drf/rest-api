@@ -89,6 +89,3 @@ pages = {
 
 # start_index = queryset[(page_size * page_number) - page_size:(page_size * page_number)]
 
-
-
-

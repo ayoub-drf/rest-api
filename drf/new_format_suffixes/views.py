@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 books = [
     {
         "id": 6,
@@ -63,15 +61,31 @@ books = [
     }
 ]
 
-from rest_framework.generics import ListAPIView
 from .serializers import BookSerializer
+
+from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.parsers import MultiPartParser, JSONParser
+from rest_framework.response import Response
+from rest_framework.decorators import renderer_classes, parser_classes, api_view
 
 from rest_framework_yaml.parsers import YAMLParser
 from rest_framework_yaml.renderers import YAMLRenderer
+
 from rest_framework_xml.parsers import XMLParser
 from rest_framework_xml.renderers import XMLRenderer
+
+# You can also use the query format 
+# http://127.0.0.1:8000/books?format=xml
+
+@api_view(['GET'])
+@renderer_classes([BrowsableAPIRenderer, JSONRenderer, YAMLRenderer, XMLRenderer])
+@parser_classes([MultiPartParser, JSONParser, YAMLParser, XMLParser])
+def book_view(request, format=None): # Format required
+    serializer = BookSerializer(books, many=True)
+
+    return Response(serializer.data, 200)
+
 
 class Books(ListAPIView):
     queryset = books

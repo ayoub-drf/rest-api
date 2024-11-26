@@ -89,3 +89,15 @@ pages = {
 
 # start_index = queryset[(page_size * page_number) - page_size:(page_size * page_number)]
 
+def get_formatted_response():
+    url = "http://127.0.0.1:8000/books"
+    headers = {
+        # 'Accept': 'application/json',
+        # 'Accept': 'application/xml',
+        'Accept': 'application/yaml',
+    }
+
+    req = requests.get(url, headers=headers)
+    print(req.text)
+    print(req.status_code)
+

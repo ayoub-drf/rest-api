@@ -4,6 +4,7 @@ from django.conf import settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'drf.settings'
 
 import requests, json
+from requests.auth import HTTPBasicAuth
 
 url, token, refresh, notes = "http://127.0.0.1:8000/", "token/", "token/refresh/", "notes/"
 
@@ -100,4 +101,27 @@ def get_formatted_response():
     req = requests.get(url, headers=headers)
     print(req.text)
     print(req.status_code)
+
+
+def get_exception_response():
+    url = "http://127.0.0.1:8000/"
+    headers = {
+        "Content-Type": "application/json"
+    }
+    payload = {}
+    data = {
+        'email': "x@aol.com"
+    }
+    # r = requests.get(f'{url}1', headers=headers)
+    # r = requests.post(f'{url}1/', headers=headers)
+
+    # r = requests.post(f'{url}', headers=headers)
+    # r = requests.get(f'{url}', headers=headers, json=payload, auth=HTTPBasicAuth(username="x", password="x"))
+
+    r = requests.put(f'{url}', data=data, headers=headers)
+
+
+
+    print(r.status_code)
+    print(r.json())
 

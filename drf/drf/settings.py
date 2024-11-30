@@ -74,11 +74,15 @@ INSTALLED_APPS = [
     'new_versioning',
     'new_metadata',
     "new_schemas",
+    "new_return_url",
+    "new_exceptions",
+    "new_testing",
+    "new_settings"
 ]
 
 
 
-REST_FRAMEWORK = {
+# REST_FRAMEWORK = {
     # 'URL_FIELD_NAME': 'link', # for HyperlinkedModelSerializer also u can do it inside the Serializer 
     # 'DEFAULT_PARSER_CLASSES': [
     #     'rest_framework.parsers.JSONParser',
@@ -92,12 +96,12 @@ REST_FRAMEWORK = {
     #     'new_throttling.throttling.BurstRateThrottle',
     # ],
     # 'DEFAULT_THROTTLE_RATES': {
-    #     'x': '2/day',
-    #     'special_scope_one': '3/day',
-    #     'special_scope_two': '10/minute',
-    #     'default': '2/day',
-    #     'anon': '7/day',
-    #     'user': '10/day',
+        # 'x': '2/day',
+        # 'special_scope_one': '3/day',
+        # 'special_scope_two': '10/minute',
+        # 'default': '2/day',
+        # 'anon': '3/minute',
+        # 'user': '10/minute',
     # }
     # 'DEFAULT_FILTER_BACKENDS': (
     #     'django_filters.rest_framework.DjangoFilterBackend',
@@ -108,7 +112,7 @@ REST_FRAMEWORK = {
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # )
-}
+# }
 
 from datetime import timedelta
 from django.conf import settings

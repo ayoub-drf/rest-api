@@ -31,7 +31,7 @@ urlpatterns = [
 
     # path('c/', include(('drf.routers', 'my_routers'))),
 
-    path('', include('new_format_suffixes.urls')),
+    path('', include('new_settings.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

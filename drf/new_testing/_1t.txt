@@ -1,0 +1,136 @@
+from django.test import TestCase
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+
+
+from rest_framework.test import (
+    APILiveServerTestCase,
+    APIClient,
+    APIRequestFactory,
+    APISimpleTestCase,
+    APITestCase,
+
+    APITransactionTestCase,
+)
+from rest_framework.status import (
+    HTTP_200_OK,
+    HTTP_201_CREATED,
+    HTTP_403_FORBIDDEN,
+)
+
+from unittest.mock import MagicMock
+
+from .models import ( Post )
+from .views import ( PostAPIView )
+from .serializers import ( PostSerializerTwo )
+
+# APILiveServerTestCase: == live server testing
+# APIRequestFactory: == unit testing views
+# APISimpleTestCase: == simple tests (no DB)
+# APITestCase: == end-to-end API tests
+# APITransactionTestCase: == transaction tests (DB rollback)
+
+
+class PostCreateAPITestCase(APITestCase): # APITestCase
+    def test_create_post(self):
+
+        res = self.client.get('/posts/')
+        print('response', res.data)
+
+        self.assertEqual(res.status_code, HTTP_200_OK)
+
+
+
+class PostSerializerTwoAPISimpleTestCase(): # APISimpleTestCase
+    def test_post_serializer(self):
+        post = {
+            'name': "New Post 100", #  length <= 10
+        }
+        serializer = PostSerializerTwo(data=post)
+
+        self.assertTrue(serializer.is_valid())
+        self.assertEqual(serializer.validated_data['name'], 'New Post 100')
+
+
+class PostCreateAPIRequestFactory(): # APILiveServerTestCase 
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.user, _ = User.objects.get_or_create(username='testuser', password='password')
+        self.post = Post.objects.create(name="New Post", author=self.user)
+        self.url = "/posts/"
+
+    def test_get_posts_factory(self):
+        req = self.factory.get(self.url)
+        view = PostAPIView.as_view()
+        res = view(req)
+
+        self.assertEqual(res.status_code, HTTP_200_OK)
+
+    
+class PostListRetrieveTestCase():
+    def setUp(self):
+        self.client = APIClient()
+
+        user = [
+            { 'username': 'x', 'email': 'x@aol.com', 'password': 'password@@'},
+            { 'username': 'maria', 'email': 'maria@aol.com', 'password': 'password@@'},
+        ]
+
+        self.userX, _ = User.objects.get_or_create(**user[0])
+        self.userMaria, _ = User.objects.get_or_create(**user[1])
+
+        self.post1 = Post.objects.create(name="Post 1", author=self.userX)
+        self.post2 = Post.objects.create(name="Post 2", author=self.userMaria)
+
+    def test_post_retrieve(self):
+        res = self.client.get(f"/posts/{self.post1.id}/")
+
+        self.assertEqual(res.status_code, HTTP_200_OK)
+        self.assertEqual(res.data['id'], self.post1.id)
+        self.assertEqual(type(res.data['id']), int)
+
+    def test_posts_list(self):
+        res = self.client.get("/posts/")
+
+        self.assertEqual(res.status_code, HTTP_200_OK)
+        self.assertEqual(len(res.data), 2)
+        self.assertEqual(res.data[0]['name'], self.post1.name)
+        self.assertEqual(res.data[1]['author'], self.userMaria.id)
+
+
+class PostCreateTestCase():
+    def setUp(self):
+        self.client = APIClient()
+        
+        self.url = f'{self.live_server_url}/posts/'
+        self.user, _ = User.objects.get_or_create(username='testuser', password='password')
+
+    
+    def test_create_post(self):
+        data = {
+            "name": "Post 111",
+            "author": self.user.id,
+        }
+        res = self.client.post(self.url, data=data, format="json")
+
+        self.assertEqual(res.status_code, HTTP_201_CREATED)
+        self.assertEqual(Post.objects.get().author, self.user)
+        self.assertEqual(Post.objects.get().name, "Post 111")
+        self.assertEqual(Post.objects.count(), 1)
+
+
+class AuthenticatedListPostTestCase():
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(username='testuser', password='password')
+        self.client.login(username='testuser', password='password')
+        self.url = '/posts/'
+
+    def test_authenticated_user(self):
+        res = self.client.get(self.url)
+        self.assertEqual(res.status_code, HTTP_200_OK)
+
+    def test_unauthenticated_user(self):
+        self.client.logout()
+        res = self.client.get(self.url)
+        self.assertEqual(res.status_code, HTTP_403_FORBIDDEN)
